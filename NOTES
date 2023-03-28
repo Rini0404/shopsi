@@ -1,0 +1,6 @@
+{
+  "paymentIntent": "pi_3MqlZvK3bd9nPur21AKu8qWA_secret_ds1bX8CyJVlVbMb6vvuOsPEVM",
+  "ephemeralKey": "ek_test_YWNjdF8xTXFiTDNLM2JkOW5QdXIyLDJta2tDWkRTU3FKMlBJSXZFT3ZkWEZ1OWNheEtUbHc_00PXq6B041",
+  "customer": "cus_NbzZBvlUYff5I5",
+  "publishableKey": "pk_test_51MqbL3K3bd9nPur2VO8pEisR6gAgJXDhfMKnpV59mpbdcQ7LpR4x552DFVz6bqeTzZCFzzHQMoLohSbGkiJTLHDO00syWhlN4D"
+}

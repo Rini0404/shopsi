@@ -2,7 +2,7 @@ import { View, Text, Image, StyleSheet, SafeAreaView } from "react-native";
 import React from "react";
 import { RouteProp } from "@react-navigation/native";
 import { RootStackParamList } from "./MyStack";
-import BuyNIAP from "../components/buyNIAP";
+import BuyButton from "../components/buyNIAP";
 type Props = {
   route: RouteProp<RootStackParamList, "Buy">;
 };
@@ -34,7 +34,7 @@ const Buy = (props: Props) => {
             {product.description} 
           </Text>
       </View> 
-      <BuyNIAP />
+      <BuyButton product={ product } />
     </SafeAreaView>
   );
 };
