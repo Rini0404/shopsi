@@ -10,7 +10,7 @@ export default function App() {
     <>
       <StripeProvider
         publishableKey={PUBLISH_KEY}
-        merchantIdentifier="merchant.com.shopsy"
+        merchantIdentifier="acct_1MqbL3K3bd9nPur2"
         urlScheme="https://ImaginaryPlasticIntelligence.rini0404.repl.co"
       >
         <StatusBar style="auto" />

@@ -9,9 +9,9 @@ import {
   View,
 } from "react-native";
 import { FlashList } from "@shopify/flash-list";
-import { useNavigation } from "@react-navigation/native";
-
-type Product = {
+import { RootStackParamList } from "./MyStack";
+import { StackNavigationProp } from "@react-navigation/stack";
+export interface Product {
   id: number;
   category: string;
   description: string;
@@ -21,8 +21,14 @@ type Product = {
   title: string;
 };
 
-export default function Products({ path }: { path: string }) {
-  const navigation = useNavigation();
+type ProductsScreenNavigationProp = StackNavigationProp<RootStackParamList, 'List'>;
+
+interface ProductsProps {
+  path: string;
+  navigation: ProductsScreenNavigationProp;
+}
+
+export default function Products({ path, navigation }: ProductsProps) {
 
   const [data, setData] = useState<Product[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -97,7 +103,7 @@ export default function Products({ path }: { path: string }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "pink",
+    backgroundColor: "#FFFFFF",
   },
   item: {
     flex: 1,
