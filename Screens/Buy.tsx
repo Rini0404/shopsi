@@ -4,11 +4,11 @@ import { RouteProp } from "@react-navigation/native";
 import { RootStackParamList } from "./MyStack";
 import BuyButton from "../components/buyNIAP";
 
-type Props = {
-  route: RouteProp<RootStackParamList, "Buy">;
-};
+interface Props {
+  route: any;
+}
 
-const Buy = (props: Props) => {
+export default function Buy(props: Props) {
   const { product } = props.route.params;
 
   return (
@@ -25,7 +25,7 @@ const Buy = (props: Props) => {
       <BuyButton product={product} />
     </SafeAreaView>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -71,5 +71,3 @@ const styles = StyleSheet.create({
     padding: 15,
   },
 });
-
-export default Buy;

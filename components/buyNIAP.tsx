@@ -3,14 +3,22 @@ import { StyleSheet, Alert, Text, Button, View } from "react-native";
 import { ApplePayButton, useStripe } from "@stripe/stripe-react-native";
 import { useNavigation } from "@react-navigation/native";
 const API_URL = "https://ImaginaryPlasticIntelligence.rini0404.repl.co";
+import { Product } from "../Screens/List";
+import { StackNavigationProp } from "@react-navigation/stack";
 
 type Props = {
   product: any;
 };
 
-const BuyButton: React.FC<Props> = ({ product }) => {
+type RootStackParamList = {
+  Success: { product: Product };
+  // Add
+};
 
-  const navigation = useNavigation();
+type SuccessScreenNavigationProp = StackNavigationProp<RootStackParamList, "Success">;
+
+const BuyButton: React.FC<Props> = ({ product }) => {
+  const navigation = useNavigation<SuccessScreenNavigationProp>();
 
   const { initPaymentSheet, presentPaymentSheet } = useStripe();
   const [loading, setLoading] = useState(false);
@@ -23,10 +31,12 @@ const BuyButton: React.FC<Props> = ({ product }) => {
       },
       // send price
       body: JSON.stringify({
-        items: {
-          id: product.id,
-          amount: product.price,
-        },
+        items: [
+          {
+            id: product.id,
+            amount: product.price,
+          },
+        ],
       }),
     });
     const { paymentIntent, ephemeralKey, customer, publishableKey } =
@@ -50,8 +60,6 @@ const BuyButton: React.FC<Props> = ({ product }) => {
       customerEphemeralKeySecret: ephemeralKey,
       paymentIntentClientSecret: paymentIntent,
       allowsDelayedPaymentMethods: true,
-      //TODO: Add redirect URL
-      returnURL: "your-app://stripe-redirect",
     });
     if (!error) {
       setLoading(true);
@@ -60,15 +68,12 @@ const BuyButton: React.FC<Props> = ({ product }) => {
 
   const openPaymentSheet = async () => {
     const { error } = await presentPaymentSheet();
-    navigation.navigate("Success", { product: product });
-
-    // if (error) {
-    //   Alert.alert(`Error code: ${error.code}`, error.message);
-    // } else {
-    //   Alert.alert("Success", "Your order is confirmed!");
-    //   // PUsh to the next screen
-    //   navigation.navigate("Success", { product: product });
-    // }
+    if (error) {
+      Alert.alert(`Error code: ${error.code}`, error.message);
+    } else {
+      Alert.alert("Success", "Your order is confirmed!");
+      navigation.navigate("Success", { product });
+    }
   };
 
   useEffect(() => {
@@ -78,15 +83,16 @@ const BuyButton: React.FC<Props> = ({ product }) => {
   return (
     <View style={styles.paying}>
       <ApplePayButton
-        onPress={openPaymentSheet}
+        onPress={() => openPaymentSheet()}
         type="plain"
         buttonStyle="black"
         borderRadius={20}
         style={styles.payButton}
       />
+
       <Text>OR</Text>
       <Button
-        onPress={openPaymentSheet}
+        onPress={() => openPaymentSheet()}
         title="Pay with Card"
         color="#841584"
         accessibilityLabel="Learn more about this purple button"
