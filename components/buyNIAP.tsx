@@ -11,7 +11,6 @@ type Props = {
 
 type RootStackParamList = {
   Success: { product: Product };
-  // Add
 };
 
 type SuccessScreenNavigationProp = StackNavigationProp<
@@ -60,6 +59,7 @@ const BuyButton: React.FC<Props> = ({ product }) => {
       customerEphemeralKeySecret: ephemeralKey,
       paymentIntentClientSecret: paymentIntent,
       allowsDelayedPaymentMethods: true,
+      style: "alwaysDark",
     });
     if (!error) {
       setLoading(true);
