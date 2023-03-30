@@ -2,12 +2,11 @@ import React, { useState, useEffect } from "react";
 import { StyleSheet, Alert, Text, Button, View } from "react-native";
 import { ApplePayButton, useStripe } from "@stripe/stripe-react-native";
 import { useNavigation } from "@react-navigation/native";
-const API_URL = "https://ImaginaryPlasticIntelligence.rini0404.repl.co";
 import { Product } from "../Screens/List";
 import { StackNavigationProp } from "@react-navigation/stack";
 
 type Props = {
-  product: any;
+  product: Product;
 };
 
 type RootStackParamList = {
@@ -15,7 +14,12 @@ type RootStackParamList = {
   // Add
 };
 
-type SuccessScreenNavigationProp = StackNavigationProp<RootStackParamList, "Success">;
+type SuccessScreenNavigationProp = StackNavigationProp<
+  RootStackParamList,
+  "Success"
+>;
+
+const API_URL = "http://192.168.1.132:5005";
 
 const BuyButton: React.FC<Props> = ({ product }) => {
   const navigation = useNavigation<SuccessScreenNavigationProp>();
@@ -31,12 +35,8 @@ const BuyButton: React.FC<Props> = ({ product }) => {
       },
       // send price
       body: JSON.stringify({
-        items: [
-          {
-            id: product.id,
-            amount: product.price,
-          },
-        ],
+        id: product.id,
+        amount: product.price,
       }),
     });
     const { paymentIntent, ephemeralKey, customer, publishableKey } =
