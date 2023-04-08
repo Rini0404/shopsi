@@ -26,6 +26,12 @@ const BuyButton: React.FC<Props> = ({ product }) => {
   const { initPaymentSheet, presentPaymentSheet } = useStripe();
   const [loading, setLoading] = useState(false);
 
+  const priceString = product.price.toFixed(2);
+  const price = parseFloat(priceString);
+  if (isNaN(price)) {
+    throw new Error("Invalid price");
+  }
+
   const fetchPaymentSheetParams = async () => {
     const response = await fetch(`${API_URL}/payment-sheet`, {
       method: "POST",
@@ -35,7 +41,7 @@ const BuyButton: React.FC<Props> = ({ product }) => {
       // send price
       body: JSON.stringify({
         id: product.id,
-        amount: product.price,
+        amount: price,
       }),
     });
     const { paymentIntent, ephemeralKey, customer, publishableKey } =
@@ -95,7 +101,6 @@ const BuyButton: React.FC<Props> = ({ product }) => {
         onPress={() => openPaymentSheet()}
         title="Pay with Card"
         color="#841584"
-        accessibilityLabel="Learn more about this purple button"
       />
     </View>
   );
